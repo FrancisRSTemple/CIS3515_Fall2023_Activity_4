@@ -1,9 +1,11 @@
 package edu.temple.activity4
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,12 @@ class MainActivity : AppCompatActivity() {
 
         //change activity name
         //should do this so the name of the "app" doesn't doesn't change
+        //only necessary for main activity (main activity with specific intent filter in the manifest
         supportActionBar?.title = "Dashboard"
+
+        findViewById<Button>(R.id.launchButton).setOnClickListener{
+            startActivity(Intent(this, SecondActivity::class.java))
+        }
 
         textSizeSelector = findViewById(R.id.textSizeSelectorRecyclerView)
         textSizeDisplay = findViewById(R.id.textSizeDisplayTextView)
