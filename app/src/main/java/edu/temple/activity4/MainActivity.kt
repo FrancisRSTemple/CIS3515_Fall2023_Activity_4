@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 
+const val TEXT_SIZE = "text size"
 class MainActivity : AppCompatActivity() {
 
     lateinit var textSizeSelector: RecyclerView
@@ -25,10 +26,6 @@ class MainActivity : AppCompatActivity() {
         //only necessary for main activity (main activity with specific intent filter in the manifest
         supportActionBar?.title = "Dashboard"
 
-        findViewById<Button>(R.id.launchButton).setOnClickListener{
-            startActivity(Intent(this, SecondActivity::class.java))
-        }
-
         textSizeSelector = findViewById(R.id.textSizeSelectorRecyclerView)
         textSizeDisplay = findViewById(R.id.textSizeDisplayTextView)
 
@@ -36,12 +33,17 @@ class MainActivity : AppCompatActivity() {
         // Verify correctness by examining array values.
         val textSize = Array(20){(it + 1) * 5}
 
-        val callback = {textSize: Float -> textSizeDisplay.textSize = textSize}
+        //val callback = {textSize: Float -> textSizeDisplay.textSize = textSize}
 
         Log.d("Array values", textSize.contentToString())
 
         with(findViewById(R.id.textSizeSelectorRecyclerView) as RecyclerView){
-            adapter = TextSizeAdapter(textSize){textSizeDisplay.textSize = it}
+            adapter = TextSizeAdapter(textSize){
+                //textSizeDisplay.textSize = it
+                val launchIntent = Intent(this@MainActivity, SecondActivity::class.java)
+                launchIntent.putExtra(TEXT_SIZE, it)
+                startActivity(launchIntent)
+            }
 
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
